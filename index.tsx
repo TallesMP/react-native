@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Image, TextInput, Platform, StatusBar, Button } from "react-native";
+import { Text, View, StyleSheet, Image, TextInput, StatusBar, Button } from "react-native";
 
 export default function Index() {
   return (
@@ -46,10 +46,10 @@ const styles = StyleSheet.create({
   imagem: {
     width: 140,
     height: 150,
-    borderRadius: 60, // Mais proporcional
+    borderRadius: 60,
   },
   login: {
-    width: '80%', // Define a largura do container de login
+    width: '80%', 
   },
   input: {
     height: 40,
@@ -65,5 +65,4 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width:285
   }
-
 });
