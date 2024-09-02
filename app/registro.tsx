@@ -1,5 +1,5 @@
 import {Text, View, StyleSheet, Image, TextInput, Platform, StatusBar, Button, } from "react-native";
-
+import styles from './styles'
 export default function Index() {
   return (
   <View style={styles.principal}>
@@ -23,29 +23,4 @@ export default function Index() {
   );
 }
 
-const styles = StyleSheet.create({
-  principal: {
-    backgroundColor: '#343b45',
-    flex:1,
-    justifyContent: 'center',
-    alignItems: 'center'
-    
-  },
-  login: {
-    width: '80%'
-  },
-  input: {
-    height: 40,
-    marginVertical: 10,
-    backgroundColor: '#3e4750',
-    color: '#ffffff',
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    elevation: 5
-  },
-  botoes: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 15
-  },
-});
+
