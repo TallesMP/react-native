@@ -1,5 +1,6 @@
 
-import { Text, View, Image, TextInput, StatusBar } from "react-native";
+
+import { Text, View, Image, StatusBar, TextInput } from "react-native";
 import { useRouter } from 'expo-router';
 import BotaoPrimario from '../../components/BotaoPrimario';
 import BotaoSecundario from '../../components/BotaoSecundario';
@@ -10,6 +11,7 @@ export default function Index() {
 
   const handleLogin = () => {
     console.log("Entrar");
+    router.push("/home");
   };
 
   const handleForgotPassword = () => {
@@ -49,11 +51,14 @@ export default function Index() {
 
       <View style={styles.botoes}>
         <BotaoSecundario title="Esqueci a senha" onPress={handleForgotPassword} />
-        <BotaoPrimario title="Entrar" onPress={handleLogin} />
       </View>
 
-      <View style={styles.criarConta}>
+      <View style={styles.botoes}>
         <BotaoSecundario title="Criar conta" onPress={handleCreateAccount} />
+      </View>
+
+      <View style={styles.botoes}>
+        <BotaoPrimario title="Entrar" onPress={handleLogin} />
       </View>
     </View>
   );
