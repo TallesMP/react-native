@@ -1,9 +1,17 @@
 
-
-import { Text, View, TextInput, TouchableOpacity, StatusBar } from "react-native";
+import { Text, View, TextInput, StatusBar } from "react-native";
+import { useRouter } from 'expo-router';
+import BotaoPrimario from '../../components/BotaoPrimario';
 import styles from '../styles';
 
 export default function Index() {
+  const router = useRouter();
+
+  const handleRecovery = () => {
+    console.log("Enviar email de recuperação");
+    router.push('/login');
+  };
+
   return (
     <View style={styles.principal}>
       <StatusBar barStyle="light-content" />
@@ -18,12 +26,7 @@ export default function Index() {
         placeholderTextColor="#aaa"
       />
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => console.log("Enviar email de recuperação")}
-      >
-        <Text style={styles.buttonText}>Enviar</Text>
-      </TouchableOpacity>
+      <BotaoPrimario title="Enviar" onPress={handleRecovery} />
     </View>
   );
 }

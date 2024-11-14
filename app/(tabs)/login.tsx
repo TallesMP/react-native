@@ -1,9 +1,27 @@
 
-import { Text, View, Image, TextInput, StatusBar, TouchableOpacity } from "react-native";
+import { Text, View, Image, TextInput, StatusBar } from "react-native";
+import { useRouter } from 'expo-router';
+import BotaoPrimario from '../../components/BotaoPrimario';
+import BotaoSecundario from '../../components/BotaoSecundario';
 import styles from '../styles';
-import { Link } from "expo-router";
 
 export default function Index() {
+  const router = useRouter();
+
+  const handleLogin = () => {
+    console.log("Entrar");
+  };
+
+  const handleForgotPassword = () => {
+    console.log("Esqueci a senha");
+    router.push('/recuperacao');
+  };
+
+  const handleCreateAccount = () => {
+    console.log("Criar conta");
+    router.push('/registro');
+  };
+
   return (
     <View style={styles.principal}>
       <StatusBar barStyle="light-content" />
@@ -30,23 +48,12 @@ export default function Index() {
       </View>
 
       <View style={styles.botoes}>
-        <Link href="/recuperacao">
-          <TouchableOpacity style={styles.buttonSecondary} onPress={() => console.log("Esqueci a senha")}>
-            <Text style={styles.buttonTextSecondary}>Esqueci a senha</Text>
-          </TouchableOpacity>
-        </Link>
-
-        <TouchableOpacity style={styles.button} onPress={() => console.log("Entrar")}>
-          <Text style={styles.buttonText}>Entrar</Text>
-        </TouchableOpacity>
+        <BotaoSecundario title="Esqueci a senha" onPress={handleForgotPassword} />
+        <BotaoPrimario title="Entrar" onPress={handleLogin} />
       </View>
 
       <View style={styles.criarConta}>
-        <Link href="/registro">
-          <TouchableOpacity style={styles.buttonSecondary} onPress={() => console.log("Criar conta")}>
-            <Text style={styles.buttonTextSecondary}>Criar conta</Text>
-          </TouchableOpacity>
-        </Link>
+        <BotaoSecundario title="Criar conta" onPress={handleCreateAccount} />
       </View>
     </View>
   );

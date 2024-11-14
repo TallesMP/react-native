@@ -1,8 +1,17 @@
 
-import { Text, View, TextInput, TouchableOpacity, StatusBar } from "react-native";
+import { Text, View, TextInput, StatusBar } from "react-native";
+import { useRouter } from 'expo-router';
+import BotaoPrimario from '../../components/BotaoPrimario';
 import styles from '../styles';
 
 export default function Index() {
+  const router = useRouter();
+
+  const handleCreateAccount = () => {
+    console.log("Criar conta");
+    router.push('/login');
+  };
+
   return (
     <View style={styles.principal}>
       <StatusBar barStyle="light-content" />
@@ -34,14 +43,7 @@ export default function Index() {
         />
       </View>
 
-      <View style={styles.botoes}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => console.log("Criar conta")}
-        >
-          <Text style={styles.buttonText}>Criar conta</Text>
-        </TouchableOpacity>
-      </View>
+      <BotaoPrimario title="Criar conta" onPress={handleCreateAccount} />
     </View>
   );
 }

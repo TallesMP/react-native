@@ -1,4 +1,3 @@
-
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -37,33 +36,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     marginTop: 20,
-  },
-  button: {
-    backgroundColor: '#FFa500',
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 5,
-  },
-  buttonSecondary: {
-    backgroundColor: '#575f66',
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 3,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  buttonTextSecondary: {
-    color: '#ccc',
-    fontSize: 16,
   },
   texto: {
     color: 'white',
