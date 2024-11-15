@@ -1,26 +1,49 @@
 
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StatusBar } from 'react-native';
-import { useRouter } from 'expo-router';
 import styles from '../styles';
+import { supabase } from '../ClienteSupabase';
 
 const fetchGrupos = async () => {
-  return [
-    { id: '1', nome: 'Grupo Alpha', descricao: 'Grupo focado em IA', tema: 'Inteligência Artificial', integrantes: ['Alice', 'Bob', 'Carlos', 'Diana'], isCurrentUserGroup: false },
-    { id: '2', nome: 'Grupo Beta', descricao: 'Grupo de Blockchain', tema: 'Blockchain', integrantes: ['Eve', 'Fay', 'George', 'Hannah'], isCurrentUserGroup: true },
-    { id: '3', nome: 'Grupo Gamma', descricao: 'Grupo sobre Robótica', tema: 'Robótica', integrantes: ['Igor', 'Julia', 'Karla', 'Lucas'], isCurrentUserGroup: false },
-    { id: '4', nome: 'Grupo Delta', descricao: 'Grupo de Inovação Social', tema: 'Inovação Social', integrantes: ['Maria', 'Nina', 'Oscar', 'Paul'], isCurrentUserGroup: false },
-  ];
+  try {
+    const { data, error } = await supabase.from('Grupos').select('*');
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error('Erro ao buscar grupos:', error);
+    return [];
+  }
+};
+
+
+const fetchIntegrantes = async (idGrupo: string) => {
+  try {
+    const { data, error } = await supabase
+      .from('Usuarios')
+      .select('nome')
+      .eq('id_grupo', idGrupo);
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error('Erro ao buscar integrantes:', error);
+    return [];
+  }
 };
 
 export default function Home() {
-  const router = useRouter();
   const [grupos, setGrupos] = useState<any[]>([]);
+  const [expandedGroupId, setExpandedGroupId] = useState<string | null>(null);
+  const [integrantes, setIntegrantes] = useState<any[]>([]);
 
-  // Função para carregar os grupos da API (simulada)
   const loadGrupos = async () => {
     const gruposData = await fetchGrupos();
     setGrupos(gruposData);
+  };
+
+
+  const loadIntegrantes = async (idGrupo: string) => {
+    const integrantesData = await fetchIntegrantes(idGrupo);
+    setIntegrantes(integrantesData);
   };
 
   useEffect(() => {
@@ -33,28 +56,48 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleEditGroup = (groupId: string) => {
-    console.log("Editar grupo", groupId);
-    //router.push(`/editarGrupo/${groupId}`);
+  const toggleGroupExpansion = async (groupId: string) => {
+    if (expandedGroupId === groupId) {
+      setExpandedGroupId(null); // fecha se o grupo já estiver expandido
+      setIntegrantes([]);
+    } else {
+      setExpandedGroupId(groupId);
+      await loadIntegrantes(groupId);
+    }
   };
 
-  const renderGroupItem = ({ item }: any) => (
-    <View style={[styles.grupoItem, item.isCurrentUserGroup && styles.grupoItemDestaque]}>
-      <Text style={styles.grupoNome}>{item.nome}</Text>
-      <Text style={styles.grupoDescricao}>{item.descricao}</Text>
-      <Text style={styles.grupoTema}>{item.tema}</Text>
-      <Text style={styles.integrantesTitulo}>Integrantes:</Text>
-      <Text style={styles.integrantes}>{item.integrantes.join(', ')}</Text>
-      {item.isCurrentUserGroup && (
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => handleEditGroup(item.id)}
-        >
-          <Text style={styles.buttonText}>Editar Grupo</Text>
-        </TouchableOpacity>
-      )}
-    </View>
-  );
+  const renderGroupItem = ({ item }: any) => {
+    const isExpanded = item.id === expandedGroupId;
+
+    return (
+      <TouchableOpacity onPress={() => toggleGroupExpansion(item.id)}>
+        <View style={[styles.grupoItem, isExpanded && styles.grupoItemDestaque]}>
+          <Text style={styles.grupoNome}>{item.nome}</Text>
+          {isExpanded && (
+            <>
+              <Text style={styles.grupoDescricao}>{item.descricao}</Text>
+              <Text style={styles.grupoTema}>{item.tema}</Text>
+              <Text style={styles.criado}>Criado em: {new Date(item.criado).toLocaleDateString()}</Text>
+
+              {/* Mostrar os integrantes do grupo */}
+              {integrantes.length > 0 && (
+                <View style={styles.integrantesContainer}>
+                  <Text style={styles.integrantesTitle}>Integrantes:</Text>
+                  <FlatList
+                    data={integrantes}
+                    renderItem={({ item }) => (
+                      <Text style={styles.integranteNome}>{item.nome}</Text>
+                    )}
+                    keyExtractor={(item) => item.nome}
+                  />
+                </View>
+              )}
+            </>
+          )}
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.principal2}>
@@ -65,8 +108,8 @@ export default function Home() {
         renderItem={renderGroupItem}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listaGrupos}
-        showsVerticalScrollIndicator={false} // Ativa a barra de rolagem
-        indicatorStyle="black" // Cor da barra de rolagem
+        showsVerticalScrollIndicator={false}
+        indicatorStyle="black"
       />
     </View>
   );

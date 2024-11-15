@@ -1,16 +1,37 @@
 
 
+import React, { useState } from 'react';
 import { Text, View, Image, StatusBar, TextInput } from "react-native";
 import { useRouter } from 'expo-router';
 import BotaoPrimario from '../../components/BotaoPrimario';
 import BotaoSecundario from '../../components/BotaoSecundario';
+import { supabase } from '../ClienteSupabase';
 import styles from '../styles';
 
 export default function Index() {
   const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = () => {
-    console.log("Entrar");
+  const handleLogin = async () => {
+    setLoading(true);
+    setError(null);
+
+    // Autenticação no Supabase
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      setLoading(false);
+      setError(error.message);
+      return;
+    }
+
+    console.log('Usuário autenticado:', data);
     router.push("/home");
   };
 
@@ -30,7 +51,7 @@ export default function Index() {
 
       <View style={styles.perfil}>
         <Image
-          source={{ uri: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ficones.pro%2Fwp-content%2Fuploads%2F2021%2F02%2Ficone-utilisateur-orange.png&f=1&nofb=1&ipt=4f4a154e78b0f2163abea272a3417191a20c2bf26a9a5a9162f64ff4f110a3ea&ipo=images' }}
+          source={require('../../assets/images/profile-icon.png')}
           style={styles.imagem}
         />
       </View>
@@ -40,14 +61,25 @@ export default function Index() {
           style={styles.input}
           placeholder="Usuário"
           placeholderTextColor="#aaa"
+          value={email}
+          onChangeText={setEmail}
         />
         <TextInput
           style={styles.input}
           placeholder="Senha"
           placeholderTextColor="#aaa"
           secureTextEntry
+          value={password}
+          onChangeText={setPassword}
         />
       </View>
+
+      {error && <Text style={{ color: 'red', textAlign: 'center' }}>{error}</Text>} {/* Exibe erros */}
+
+      <View style={styles.botoes}>
+        <BotaoPrimario title={loading ? "Carregando..." : "Entrar"} onPress={handleLogin} />
+      </View>
+
 
       <View style={styles.botoes}>
         <BotaoSecundario title="Esqueci a senha" onPress={handleForgotPassword} />
@@ -57,9 +89,6 @@ export default function Index() {
         <BotaoSecundario title="Criar conta" onPress={handleCreateAccount} />
       </View>
 
-      <View style={styles.botoes}>
-        <BotaoPrimario title="Entrar" onPress={handleLogin} />
-      </View>
     </View>
   );
 }

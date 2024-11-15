@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   login: {
     width: '100%',
-    maxWidth: 400,  // Definir largura máxima para os inputs
+    maxWidth: 400,
   },
   input: {
     height: 45,
@@ -32,12 +32,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderRadius: 8,
     elevation: 3,
-    width: '100%',  // Garantir que o input ocupe toda a largura disponível
-    maxWidth: 400,  // Limitar a largura máxima
+    width: '100%',
+    maxWidth: 400,
   },
   botoes: {
     width: '100%',
-    maxWidth: 400,  // Definir largura máxima para os botões
+    maxWidth: 400,
     marginTop: 15,
   },
   texto: {
@@ -51,14 +51,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 
-  // HOME: 
-
+  // HOME:
   principal2: {
     backgroundColor: '#343b45',
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
   },
 
   titulo: {
@@ -67,62 +66,73 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginVertical: 20,
   },
+
   listaGrupos: {
-    width: '100%',  // Garantir que a lista ocupe toda a largura disponível
+    width: '100%',
     paddingBottom: 20,
+    paddingHorizontal: 0,
   },
+
   grupoItem: {
     backgroundColor: '#3e4750',
-    padding: 15,
+    padding: 20,
     marginVertical: 10,
     borderRadius: 8,
     elevation: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: 80,
+    width: '100%',
+    minWidth: 250
   },
+
   grupoItemDestaque: {
     borderColor: '#FFa500',
     borderWidth: 2,
     backgroundColor: '#4a565f',
   },
+
   grupoNome: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
+
   grupoDescricao: {
     color: '#ccc',
     fontSize: 14,
     marginVertical: 5,
   },
+
   grupoTema: {
     color: '#aaa',
     fontSize: 14,
   },
-  integrantesTitulo: {
-    color: '#FFa500',
-    fontSize: 16,
-    fontWeight: 'bold',
+
+  criado: {
+    color: '#bbb',
+    fontSize: 12,
+    marginTop: 5,
+  },
+
+  integrantesContainer: {
     marginTop: 10,
+    marginBottom: 10,
   },
-  integrantes: {
-    color: '#ccc',
-    fontSize: 14,
-  },
-  button: {
-    backgroundColor: '#FFa500',
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 5,
-    marginTop: 10,
-  },
-  buttonText: {
+
+  integrantesTitle: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+    marginBottom: 5,
   },
+
+  integranteNome: {
+    color: '#ccc',
+    fontSize: 14,
+    marginVertical: 2,
+  }
 });
 
 export default styles;
-
