@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
   integrantesContainer: {
     marginTop: 10,
     marginBottom: 10,
+    alignItems: 'center',
   },
 
   integrantesTitle: {
@@ -126,13 +127,38 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
+    textAlign: 'center',
   },
 
   integranteNome: {
     color: '#ccc',
     fontSize: 14,
     marginVertical: 2,
-  }
+    textAlign: 'center',
+  },
+
+  notaTitle: {
+    color: '#FFa500',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+
+  notaValor: {
+    color: '#ccc',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+
+  logoutIcon: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    zIndex: 10,
+  },
+
 });
 
 export default styles;

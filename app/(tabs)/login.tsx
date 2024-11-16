@@ -1,5 +1,3 @@
-
-
 import React, { useState } from 'react';
 import { Text, View, Image, StatusBar, TextInput } from "react-native";
 import { useRouter } from 'expo-router';
@@ -19,7 +17,6 @@ export default function Index() {
     setLoading(true);
     setError(null);
 
-    // Autenticação no Supabase
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
