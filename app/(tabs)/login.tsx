@@ -29,7 +29,8 @@ export default function Index() {
     }
 
     console.log('Usuário autenticado:', data);
-    router.push("/home");
+    //@ts-ignore
+    router.push("/");
   };
 
   const handleForgotPassword = () => {
